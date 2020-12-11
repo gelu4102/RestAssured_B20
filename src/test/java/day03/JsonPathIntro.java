@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -58,6 +60,35 @@ public class JsonPathIntro {
         System.out.println("myGender = " + gender);
         System.out.println("myPhone = " + phone);
 
+    }
+    @DisplayName("Extracting data from Json Array Response")
+    @Test
+    public void getAllSpartanExtractingData(){
+
+        //Response response = get("/spartans");
+        //JsonPath jp = response.jsonPath();
+
+        JsonPath jp = get("/spartans").jsonPath();
+
+        //get the first Json object name field
+        System.out.println("jp.getString(\"name[0]\")" +
+                " = " + jp.getString("name[0]"));
+        System.out.println("jp.getLong(\"phone[0]\")" +
+                " = " + jp.getLong("phone[0]"));
+
+        System.out.println("jp.getString(\"gender[6]\") " +
+                "= " + jp.getString("gender[6]"));
+
+        //getting all the name fields from the jsonArray Response
+        //and storing as a list
+        List<String> allNames = jp.getList("name");
+        System.out.println("allNames = " + allNames);
+
+        //getting all the phone fields from the jsonArray Response
+        //and storing as a list
+
+        List<Long> allPhones = jp.getList("phone");
+        System.out.println("allPhones = " + allPhones);
     }
 
 
